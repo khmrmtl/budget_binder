@@ -4,6 +4,8 @@ import 'package:budget_binder/core/constants.dart';
 import 'package:budget_binder/core/storage_manager.dart';
 import 'package:budget_binder/data/models/user_model.dart';
 import 'package:budget_binder/presentation/screens/welcome_page/cubit/welcome_page_cubit.dart';
+import 'package:budget_binder/usecase/app_usecase/app_usecase.dart';
+import 'package:budget_binder/usecase/app_usecase/app_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,9 +18,12 @@ void main() async {
   await DatabaseHelper().database; // initialize database
 
   final userData = await StorageManager.readData(kUserKey);
+  final AppUsecase appUsecase = AppUsecaseImpl();
   final UserModel? user;
+
   if (userData != null) {
     user = UserModel.fromMap(jsonDecode(userData));
+    appUsecase.setCurrentUser(user);
   } else {
     user = null;
   }
@@ -43,7 +48,7 @@ class MyApp extends StatelessWidget {
         create: (context) => WelcomePageCubit()..init(),
         // child: const HomePage(),
 
-        child: user != null ? MainPage(user: user!) : const WelcomePage(),
+        child: user != null ? const MainPage() : const WelcomePage(),
       ),
     );
   }

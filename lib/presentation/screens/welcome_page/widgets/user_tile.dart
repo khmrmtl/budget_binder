@@ -17,8 +17,8 @@ class UserTile extends StatelessWidget {
       subtitle: Text('Username: ${user.username}'),
       onTap: () {
         BlocProvider.of<WelcomePageCubit>(context).selectUser(user);
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => MainPage(user: user)));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const MainPage()));
       },
       // Add more details as needed
     );

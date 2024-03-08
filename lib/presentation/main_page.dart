@@ -1,15 +1,14 @@
 import 'package:budget_binder/data/database/income_operations.dart';
 import 'package:budget_binder/data/database/user_operations.dart';
-import 'package:budget_binder/data/models/user_model.dart';
+import 'package:budget_binder/presentation/screens/expense_page/cubit/expense_page_cubit.dart';
+import 'package:budget_binder/presentation/screens/history_page/history_page.dart';
+import 'package:budget_binder/presentation/screens/home_page/home_page.dart';
 import 'package:budget_binder/presentation/screens/income_page/cubit/income_page_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key, required this.user});
-
-  final UserModel user;
-  static late final UserModel currentUser;
+  const MainPage({super.key});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -23,22 +22,41 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-    MainPage.currentUser = widget.user;
     userTable.getUsers();
     incomeTable.getUserIncome(2);
     incomeTable.getTotalIncomeForUser(1);
     super.initState();
   }
 
+  final List<Widget> _body = [
+    Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => const HomePageProvider(),
+        );
+      },
+    ),
+    Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => const HistoryPage(),
+        );
+      },
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<IncomePageCubit>(create: (context) => IncomePageCubit()),
-        BlocProvider<IncomePageCubit>(create: (context) => IncomePageCubit()),
+        BlocProvider<ExpensePageCubit>(create: (context) => ExpensePageCubit()),
       ],
       child: Scaffold(
-        body: const Placeholder(),
+        body: IndexedStack(
+          index: _currentIndex,
+          children: _body,
+        ),
         floatingActionButton: FloatingActionButton(onPressed: () {
           // userTable.createUser('user2');
           // userTable.update(2, "user2");
@@ -63,7 +81,7 @@ class _MainPageState extends State<MainPage> {
               icon: Icon(
                 Icons.history,
               ),
-              label: 'next',
+              label: 'Transactions',
             ),
           ],
         ),
