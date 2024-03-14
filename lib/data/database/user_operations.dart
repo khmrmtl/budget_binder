@@ -16,9 +16,9 @@ class UserDBOperations {
   Future<List<UserModel>> getUsers() async {
     final database = await dbHelper.database;
     final result = await database.query(kUserTable, orderBy: 'id');
-    print(result);
+
     final users = result.map((e) => UserModel.fromMap(e)).toList();
-    print(users);
+
     return users;
   }
 

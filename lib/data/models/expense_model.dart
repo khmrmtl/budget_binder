@@ -4,7 +4,7 @@ class ExpenseModel {
   double amount;
   String description;
   String category;
-  String date;
+  DateTime date;
 
   ExpenseModel({
     required this.id,
@@ -15,6 +15,14 @@ class ExpenseModel {
     required this.date,
   });
 
+  ExpenseModel.fromMap(Map<String, dynamic> map)
+      : id = map['id'] as int,
+        userId = map['user_id'] as int,
+        amount = map['amount'] as double,
+        description = map['description'] as String,
+        category = map['category'] as String,
+        date = DateTime.parse(map['date'] as String);
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -22,7 +30,7 @@ class ExpenseModel {
       'amount': amount,
       'description': description,
       'category': category,
-      'date': date,
+      'date': date.toString(),
     };
   }
 }

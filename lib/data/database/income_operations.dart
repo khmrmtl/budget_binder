@@ -1,4 +1,5 @@
 import 'package:budget_binder/data/database/database_helper.dart';
+import 'package:budget_binder/data/models/income_model.dart';
 
 import '../../core/constants.dart';
 
@@ -22,12 +23,14 @@ class IncomeDBOperations {
     return id;
   }
 
-  Future<List<Map<String, dynamic>>> getUserIncome(int userId) async {
+  Future<List<IncomeModel>> getUserIncome(int userId) async {
     final database = await dbHelper.database;
     final result = await database
         .query(kIncomeTable, where: 'user_id = ?', whereArgs: [userId]);
-    print(result);
-    return result;
+
+    final income = result.map((e) => IncomeModel.fromMap(e)).toList();
+    print(income);
+    return income;
   }
 
   Future<int> delete(int id) async {

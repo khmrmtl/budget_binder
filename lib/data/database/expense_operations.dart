@@ -1,4 +1,5 @@
 import 'package:budget_binder/data/database/database_helper.dart';
+import 'package:budget_binder/data/models/expense_model.dart';
 
 import '../../core/constants.dart';
 
@@ -24,12 +25,13 @@ class ExpenseDBOperations {
     return id;
   }
 
-  Future<List<Map<String, dynamic>>> getUserExpenses(int userId) async {
+  Future<List<ExpenseModel>> getUserExpenses(int userId) async {
     final database = await dbHelper.database;
     final result = await database
         .query(kExpensesTable, where: 'user_id = ?', whereArgs: [userId]);
-    print(result);
-    return result;
+    final expenses = result.map((e) => ExpenseModel.fromMap(e)).toList();
+    print(expenses);
+    return expenses;
   }
 
   Future<int> delete(int id) async {
@@ -38,12 +40,17 @@ class ExpenseDBOperations {
         .delete(kExpensesTable, where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<int> update(
-      {required int id, required double amount, required String source}) async {
+  Future<int> update({
+    required int id,
+    required double amount,
+    required String description,
+    required String category,
+  }) async {
     final database = await dbHelper.database;
     final data = {
       'amount': amount,
-      'source': source,
+      'description': description,
+      'category': category,
     };
     return await database
         .update(kExpensesTable, data, where: 'id = ?', whereArgs: [id]);

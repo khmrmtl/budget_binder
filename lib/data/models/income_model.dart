@@ -3,7 +3,7 @@ class IncomeModel {
   int userId;
   double amount;
   String source;
-  String date;
+  DateTime date;
 
   IncomeModel({
     required this.id,
@@ -13,13 +13,20 @@ class IncomeModel {
     required this.date,
   });
 
+  IncomeModel.fromMap(Map<String, dynamic> map)
+      : id = map['id'] as int,
+        userId = map['user_id'] as int,
+        amount = map['amount'] as double,
+        source = map['source'] as String,
+        date = DateTime.parse(map['date']);
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'user_id': userId,
       'amount': amount,
       'source': source,
-      'date': date,
+      'date': date.toString(),
     };
   }
 }

@@ -1,7 +1,7 @@
 import 'package:budget_binder/data/database/income_operations.dart';
 import 'package:budget_binder/data/database/user_operations.dart';
 import 'package:budget_binder/presentation/screens/expense_page/cubit/expense_page_cubit.dart';
-import 'package:budget_binder/presentation/screens/history_page/history_page.dart';
+import 'package:budget_binder/presentation/screens/transaction_page/transaction_page.dart';
 import 'package:budget_binder/presentation/screens/home_page/home_page.dart';
 import 'package:budget_binder/presentation/screens/income_page/cubit/income_page_cubit.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +39,7 @@ class _MainPageState extends State<MainPage> {
     Navigator(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => const HistoryPage(),
+          builder: (context) => const TransactionPageProvider(),
         );
       },
     ),
