@@ -3,34 +3,35 @@ import 'package:budget_binder/data/models/user_model.dart';
 
 import '../../core/constants.dart';
 
-class UserDBOperations {
+class BudgetDBOperations {
   final dbHelper = DatabaseHelper();
 
   Future<int> createUser(String username) async {
     final database = await dbHelper.database;
     final data = {'username': username};
-    final id = await database.insert(kUserTable, data);
+    final id = await database.insert(kBudgetTable, data);
     return id;
   }
 
-  Future<List<UserModel>> getUsers() async {
+  Future<List<BudgetModel>> getUsers() async {
     final database = await dbHelper.database;
-    final result = await database.query(kUserTable, orderBy: 'id');
-
-    final users = result.map((e) => UserModel.fromMap(e)).toList();
-
+    final result = await database.query(kBudgetTable, orderBy: 'id');
+    print(result);
+    final users = result.map((e) => BudgetModel.fromMap(e)).toList();
+    print(users);
     return users;
   }
 
   Future<int> delete(int id) async {
     final database = await dbHelper.database;
-    return await database.delete(kUserTable, where: 'id = ?', whereArgs: [id]);
+    return await database
+        .delete(kBudgetTable, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<int> update(int id, String username) async {
     final database = await dbHelper.database;
     final data = {'username': username};
     return await database
-        .update(kUserTable, data, where: 'id = ?', whereArgs: [id]);
+        .update(kBudgetTable, data, where: 'id = ?', whereArgs: [id]);
   }
 }

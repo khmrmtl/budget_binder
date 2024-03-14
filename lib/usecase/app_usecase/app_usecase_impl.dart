@@ -19,20 +19,20 @@ class AppUsecaseImpl implements AppUsecase {
   final IncomeDBOperations _incomeTable = IncomeDBOperations();
   final ExpenseDBOperations _expenseTable = ExpenseDBOperations();
 
-  late UserModel user;
+  late BudgetModel activeBudget;
 
   @override
-  UserModel getCurrentUser() {
-    return user;
+  BudgetModel getCurrentBudget() {
+    return activeBudget;
   }
 
   @override
-  void setCurrentUser(UserModel currentUser) {
-    user = currentUser;
+  void setCurrentBudget(BudgetModel currentUser) {
+    activeBudget = currentUser;
   }
 
   @override
-  Future<double> getUserBalance(int id) async {
+  Future<double> getBudgetBalance(int id) async {
     double income = await _incomeTable.getTotalIncomeForUser(id);
     double expense = await _expenseTable.getTotalExpenseForUser(id);
     double balance = income - expense;

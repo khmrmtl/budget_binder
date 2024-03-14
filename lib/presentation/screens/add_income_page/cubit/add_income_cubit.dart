@@ -20,7 +20,7 @@ class AddIncomeCubit extends Cubit<AddIncomeState> {
 
   void submit() {
     if (formKey.currentState?.validate() ?? false) {
-      int userID = _appUsecase.getCurrentUser().id;
+      int userID = _appUsecase.getCurrentBudget().id;
       _incomeTable.addIncome(
         userId: userID,
         amount: double.parse(amountController.text),

@@ -19,7 +19,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
 
   void submit() {
     if (formKey.currentState?.validate() ?? false) {
-      int userID = _appUsecase.getCurrentUser().id;
+      int userID = _appUsecase.getCurrentBudget().id;
       _expenseTable.addExpense(
         userId: userID,
         amount: double.parse(amountController.text),
