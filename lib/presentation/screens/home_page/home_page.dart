@@ -1,6 +1,6 @@
 import 'package:budget_binder/presentation/screens/add_income_page/add_income_page.dart';
 import 'package:budget_binder/presentation/screens/home_page/cubit/home_page_cubit.dart';
-import 'package:budget_binder/usecase/app_usecase/app_usecase_impl.dart';
+// import 'package:budget_binder/usecase/app_usecase/app_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = AppUsecaseImpl().getCurrentUser();
+    // final currentBudget = AppUsecaseImpl().getCurrentBudget();
     return Scaffold(
       body: SafeArea(child: BlocBuilder<HomePageCubit, HomePageState>(
         builder: (context, state) {
@@ -38,18 +38,17 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   color: const Color(0xFF111729),
-                  child: Padding(
+                  child: const Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Hey, ${currentUser.username}!",
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 32),
+                          "Hey, !",
+                          style: TextStyle(color: Colors.white, fontSize: 32),
                         ),
-                        const SizedBox(height: 10),
-                        const Text(
+                        SizedBox(height: 10),
+                        Text(
                           "Welcome to BudgetBinder,\nYour Financial Companion 🌟",
                           style: TextStyle(
                             color: Colors.white,

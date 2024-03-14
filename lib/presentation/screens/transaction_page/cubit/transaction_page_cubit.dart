@@ -18,17 +18,18 @@ class TransactionPageCubit extends Cubit<TransactionPageState> {
   final _incomeTable = IncomeDBOperations();
   final _expenseTable = ExpenseDBOperations();
   final AppUsecase _appUsecase = AppUsecaseImpl();
-  late final UserModel currentUser;
+  late final BudgetModel activeBudget;
 
   void init() async {
-    currentUser = _appUsecase.getCurrentUser();
+    activeBudget = _appUsecase.getCurrentBudget();
     showTransactions();
   }
 
   Future<void> showTransactions() async {
-    List<IncomeModel> income = await _incomeTable.getUserIncome(currentUser.id);
+    List<IncomeModel> income =
+        await _incomeTable.getUserIncome(activeBudget.id);
     List<ExpenseModel> expenses =
-        await _expenseTable.getUserExpenses(currentUser.id);
+        await _expenseTable.getUserExpenses(activeBudget.id);
     List<dynamic> transactions = [...income, ...expenses];
     //sort by time
     transactions.sort((a, b) => a.date.compareTo(b.date));
