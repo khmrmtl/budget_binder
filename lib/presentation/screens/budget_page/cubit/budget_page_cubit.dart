@@ -9,20 +9,20 @@ import 'package:budget_binder/usecase/app_usecase/app_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'welcome_page_state.dart';
+part 'budget_page_state.dart';
 
-class WelcomePageCubit extends Cubit<WelcomePageState> {
-  WelcomePageCubit() : super(WelcomePageInitial());
+class BudgetPageCubit extends Cubit<BudgetPageState> {
+  BudgetPageCubit() : super(BudgetPageInitial());
 
-  final _userTable = UserDBOperations();
+  final _userTable = BudgetDBOperations();
   final AppUsecase _appUsecase = AppUsecaseImpl();
 
   TextEditingController usernameController = TextEditingController();
-  List<UserModel> _users = [];
+  List<BudgetModel> _users = [];
 
   void init() async {
     _users = await _userTable.getUsers();
-    if (_users.isNotEmpty) emit(WelcomePageLoaded(users: _users));
+    if (_users.isNotEmpty) emit(BudgetPageLoaded(users: _users));
   }
 
   Future<void> createUser() async {
@@ -30,8 +30,8 @@ class WelcomePageCubit extends Cubit<WelcomePageState> {
     init();
   }
 
-  Future<void> selectUser(UserModel user) async {
-    _appUsecase.setCurrentUser(user);
+  Future<void> selectUser(BudgetModel user) async {
+    _appUsecase.setCurrentBudget(user);
     await StorageManager.saveData(kUserKey, jsonEncode(user.toMap()));
   }
 }

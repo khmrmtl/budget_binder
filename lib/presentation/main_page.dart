@@ -1,5 +1,6 @@
 import 'package:budget_binder/data/database/income_operations.dart';
 import 'package:budget_binder/data/database/user_operations.dart';
+import 'package:budget_binder/presentation/screens/budget_page/budget_page.dart';
 import 'package:budget_binder/presentation/screens/expense_page/cubit/expense_page_cubit.dart';
 import 'package:budget_binder/presentation/screens/history_page/history_page.dart';
 import 'package:budget_binder/presentation/screens/home_page/home_page.dart';
@@ -17,7 +18,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
-  final userTable = UserDBOperations();
+  final userTable = BudgetDBOperations();
   final incomeTable = IncomeDBOperations();
 
   @override
@@ -29,6 +30,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   final List<Widget> _body = [
+    const BudgetPage(),
     Navigator(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
@@ -76,6 +78,12 @@ class _MainPageState extends State<MainPage> {
                 Icons.home,
               ),
               label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.add,
+              ),
+              label: 'add',
             ),
             BottomNavigationBarItem(
               icon: Icon(

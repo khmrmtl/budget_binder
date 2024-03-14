@@ -1,12 +1,12 @@
-import 'package:budget_binder/presentation/screens/welcome_page/cubit/welcome_page_cubit.dart';
-import 'package:budget_binder/presentation/screens/welcome_page/widgets/user_tile.dart';
+import 'package:budget_binder/presentation/screens/budget_page/cubit/budget_page_cubit.dart';
+import 'package:budget_binder/presentation/screens/budget_page/widgets/budget_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WelcomePage extends StatelessWidget {
-  const WelcomePage({super.key});
+class BudgetPage extends StatelessWidget {
+  const BudgetPage({super.key});
 
-  void _showUsernameInputDialog(BuildContext context, WelcomePageCubit cubit) {
+  void _showUsernameInputDialog(BuildContext context, BudgetPageCubit cubit) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -38,22 +38,22 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final welcomePageCubit = BlocProvider.of<WelcomePageCubit>(context);
+    final welcomePageCubit = BlocProvider.of<BudgetPageCubit>(context);
     return Scaffold(
-      body: BlocBuilder<WelcomePageCubit, WelcomePageState>(
+      body: BlocBuilder<BudgetPageCubit, BudgetPageState>(
         builder: (context, state) {
           return SafeArea(
             child: Center(
               child: Column(
                 children: [
                   Expanded(
-                    child: state is WelcomePageInitial
+                    child: state is BudgetPageInitial
                         ? Text("No users yet")
                         : SingleChildScrollView(
                             child: Column(
-                              children: (state as WelcomePageLoaded)
+                              children: (state as BudgetPageLoaded)
                                   .users
-                                  .map((e) => UserTile(user: e))
+                                  .map((e) => BudgetTile(user: e))
                                   .toList(),
                             ),
                           ),

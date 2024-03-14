@@ -29,7 +29,7 @@ class DatabaseHelper {
       version: 1,
       onCreate: (db, version) async {
         await db.execute('''
-          CREATE TABLE $kUserTable (
+          CREATE TABLE $kBudgetTable (
             id INTEGER PRIMARY KEY,
             username TEXT UNIQUE
           );

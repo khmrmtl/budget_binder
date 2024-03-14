@@ -16,7 +16,7 @@ class HomePageCubit extends Cubit<HomePageState> {
   final ExpenseDBOperations _expenseTable = ExpenseDBOperations();
 
   void init() async {
-    int userId = _appUsecase.getCurrentUser().id;
+    int userId = _appUsecase.getCurrentBudget().id;
     double income = await _incomeTable.getTotalIncomeForUser(userId);
     double expense = await _expenseTable.getTotalExpenseForUser(userId);
     emit(
