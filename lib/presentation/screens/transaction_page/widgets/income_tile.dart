@@ -1,6 +1,8 @@
 import 'package:budget_binder/data/models/income_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../cubit/transaction_page_cubit.dart';
 import 'delete_income_dialog.dart';
 import 'edit_income_dialog.dart';
 
@@ -10,6 +12,7 @@ class IncomeTile extends StatelessWidget {
   final IncomeModel model;
   @override
   Widget build(BuildContext context) {
+    final cubit = BlocProvider.of<TransactionPageCubit>(context);
     return Card(
       elevation: 5,
       color: Colors.green,
@@ -28,7 +31,10 @@ class IncomeTile extends StatelessWidget {
                     onPressed: () => showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return EditIncomeDialog(income: model);
+                            return EditIncomeDialog(
+                              income: model,
+                              cubit: cubit,
+                            );
                           },
                         ),
                     child: Text('Edit')),
@@ -38,7 +44,10 @@ class IncomeTile extends StatelessWidget {
                   onPressed: () => showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return DeleteIncomeDialog(income: model);
+                      return DeleteIncomeDialog(
+                        income: model,
+                        cubit: cubit,
+                      );
                     },
                   ),
                 )

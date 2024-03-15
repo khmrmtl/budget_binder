@@ -6,20 +6,34 @@ import '../../core/constants.dart';
 class BudgetDBOperations {
   final dbHelper = DatabaseHelper();
 
-  Future<int> createUser(String username) async {
+  Future<int> createBudget(String username) async {
     final database = await dbHelper.database;
     final data = {'username': username};
     final id = await database.insert(kBudgetTable, data);
     return id;
   }
 
-  Future<List<BudgetModel>> getUsers() async {
+  Future<List<BudgetModel>> getBudgets() async {
     final database = await dbHelper.database;
     final result = await database.query(kBudgetTable, orderBy: 'id');
     print(result);
-    final users = result.map((e) => BudgetModel.fromMap(e)).toList();
-    print(users);
-    return users;
+    final budgets = result.map((e) => BudgetModel.fromMap(e)).toList();
+    print(budgets);
+    return budgets;
+  }
+
+  Future<BudgetModel?> getBudgetByID(int id) async {
+    final database = await dbHelper.database;
+    final result =
+        await database.query(kBudgetTable, where: 'id = ?', whereArgs: [id]);
+    print(result);
+    final budget = result.map((e) => BudgetModel.fromMap(e)).toList();
+    print(budget);
+    if (result.isNotEmpty) {
+      return BudgetModel.fromMap(result.first);
+    } else {
+      return null;
+    }
   }
 
   Future<int> delete(int id) async {

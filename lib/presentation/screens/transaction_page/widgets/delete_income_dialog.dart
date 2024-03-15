@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../../../data/models/income_model.dart';
-import '../transaction_page.dart';
+import '../cubit/transaction_page_cubit.dart';
 
 class DeleteIncomeDialog extends StatefulWidget {
-  const DeleteIncomeDialog({super.key, required this.income});
+  const DeleteIncomeDialog(
+      {super.key, required this.income, required this.cubit});
 
   final IncomeModel income;
+  final TransactionPageCubit cubit;
 
   @override
   State<DeleteIncomeDialog> createState() => _DeleteIncomeDialogState();
@@ -16,7 +18,8 @@ class _DeleteIncomeDialogState extends State<DeleteIncomeDialog> {
 
   void _delete() async {
     setState(() => _loading = true);
-    await TransactionPageProvider.cubit.deleteIncome(widget.income.id);
+
+    await widget.cubit.deleteIncome(widget.income.id);
     if (mounted) {
       Navigator.of(context).pop();
     }

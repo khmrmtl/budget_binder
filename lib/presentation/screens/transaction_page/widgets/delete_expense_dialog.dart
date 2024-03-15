@@ -1,12 +1,13 @@
 import 'package:budget_binder/data/models/expense_model.dart';
 import 'package:flutter/material.dart';
-
-import '../transaction_page.dart';
+import '../cubit/transaction_page_cubit.dart';
 
 class DeleteExpenseDialog extends StatefulWidget {
-  const DeleteExpenseDialog({super.key, required this.expense});
+  const DeleteExpenseDialog(
+      {super.key, required this.expense, required this.cubit});
 
   final ExpenseModel expense;
+  final TransactionPageCubit cubit;
 
   @override
   State<DeleteExpenseDialog> createState() => _DeleteExpenseDialogState();
@@ -17,7 +18,8 @@ class _DeleteExpenseDialogState extends State<DeleteExpenseDialog> {
 
   void _delete() async {
     setState(() => _loading = true);
-    await TransactionPageProvider.cubit.deleteExpense(widget.expense.id);
+
+    await widget.cubit.deleteExpense(widget.expense.id);
     if (mounted) {
       Navigator.of(context).pop();
     }

@@ -6,23 +6,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../add_expense_page/add_expense_page.dart';
 
-class HomePageProvider extends StatelessWidget {
-  const HomePageProvider({super.key});
+// class HomePageProvider extends StatelessWidget {
+//   const HomePageProvider({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => HomePageCubit()..init(),
-      child: const HomePage(),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     print('start home');
+//     return BlocProvider(
+//       create: (BuildContext context) => HomePageCubit()..init(),
+//       child: const HomePage(),
+//     );
+//   }
+// }
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    print('dito');
     // final currentBudget = AppUsecaseImpl().getCurrentBudget();
     return Scaffold(
       body: SafeArea(child: BlocBuilder<HomePageCubit, HomePageState>(

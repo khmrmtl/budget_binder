@@ -1,12 +1,18 @@
 import 'package:budget_binder/data/database/income_operations.dart';
-import 'package:budget_binder/data/database/user_operations.dart';
+import 'package:budget_binder/data/database/budget_operations.dart';
 import 'package:budget_binder/presentation/screens/budget_page/budget_page.dart';
-import 'package:budget_binder/presentation/screens/expense_page/cubit/expense_page_cubit.dart';
+import 'package:budget_binder/presentation/screens/home_page/cubit/home_page_cubit.dart';
 import 'package:budget_binder/presentation/screens/transaction_page/transaction_page.dart';
 import 'package:budget_binder/presentation/screens/home_page/home_page.dart';
-import 'package:budget_binder/presentation/screens/income_page/cubit/income_page_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'screens/budget_page/cubit/budget_page_cubit.dart';
+import 'screens/transaction_page/cubit/transaction_page_cubit.dart';
+
+final homePageCubit = HomePageCubit();
+final budgetCubit = BudgetPageCubit();
+final transactionCubit = TransactionPageCubit();
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -23,25 +29,29 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-    userTable.getUsers();
+    userTable.getBudgets();
     incomeTable.getUserIncome(2);
     incomeTable.getTotalIncomeForUser(1);
     super.initState();
   }
 
+  void ontap(int index) {
+    setState(() => _currentIndex = index);
+  }
+
   final List<Widget> _body = [
+    Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        );
+      },
+    ),
     const BudgetPage(),
     Navigator(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => const HomePageProvider(),
-        );
-      },
-    ),
-    Navigator(
-      onGenerateRoute: (settings) {
-        return MaterialPageRoute(
-          builder: (context) => const TransactionPageProvider(),
+          builder: (context) => const TransactionPage(),
         );
       },
     ),
@@ -51,8 +61,10 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<IncomePageCubit>(create: (context) => IncomePageCubit()),
-        BlocProvider<ExpensePageCubit>(create: (context) => ExpensePageCubit()),
+        BlocProvider<HomePageCubit>(create: (context) => homePageCubit..init()),
+        BlocProvider<BudgetPageCubit>(create: (context) => budgetCubit..init()),
+        BlocProvider<TransactionPageCubit>(
+            create: (context) => transactionCubit..init()),
       ],
       child: Scaffold(
         body: IndexedStack(
@@ -71,7 +83,7 @@ class _MainPageState extends State<MainPage> {
         }),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
-          onTap: (value) => setState(() => _currentIndex = value),
+          onTap: ontap,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(

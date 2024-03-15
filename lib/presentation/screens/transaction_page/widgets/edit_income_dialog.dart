@@ -1,12 +1,13 @@
-import 'package:budget_binder/presentation/screens/transaction_page/transaction_page.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../data/models/income_model.dart';
+import '../cubit/transaction_page_cubit.dart';
 
 class EditIncomeDialog extends StatefulWidget {
   final IncomeModel income;
+  final TransactionPageCubit cubit;
 
-  const EditIncomeDialog({super.key, required this.income});
+  const EditIncomeDialog(
+      {super.key, required this.income, required this.cubit});
 
   @override
   State<EditIncomeDialog> createState() => _EditIncomeDialogState();
@@ -34,7 +35,8 @@ class _EditIncomeDialogState extends State<EditIncomeDialog> {
 
   void _save() async {
     setState(() => _loading = true);
-    await TransactionPageProvider.cubit.updateIncome(
+
+    await widget.cubit.updateIncome(
       widget.income.id,
       _amountController.text,
       _sourceController.text,

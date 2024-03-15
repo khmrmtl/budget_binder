@@ -4,4 +4,5 @@ abstract class AppUsecase {
   Future<double> getBudgetBalance(int id);
   BudgetModel getCurrentBudget();
   void setCurrentBudget(BudgetModel currentUser);
+  bool get hasAnActiveBudget;
 }

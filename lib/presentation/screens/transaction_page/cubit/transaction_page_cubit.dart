@@ -18,7 +18,7 @@ class TransactionPageCubit extends Cubit<TransactionPageState> {
   final _incomeTable = IncomeDBOperations();
   final _expenseTable = ExpenseDBOperations();
   final AppUsecase _appUsecase = AppUsecaseImpl();
-  late final BudgetModel activeBudget;
+  late BudgetModel activeBudget;
 
   void init() async {
     activeBudget = _appUsecase.getCurrentBudget();

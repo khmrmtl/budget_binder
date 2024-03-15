@@ -1,4 +1,4 @@
-const String kUserKey = 'user';
+const String kBudgetKey = 'user';
 
 const kBudgetTable = 'budget';
 const kExpensesTable = 'expenses';

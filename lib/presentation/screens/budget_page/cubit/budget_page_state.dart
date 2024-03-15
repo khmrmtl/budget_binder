@@ -7,6 +7,10 @@ final class BudgetPageInitial extends BudgetPageState {}
 
 final class BudgetPageLoaded extends BudgetPageState {
   final List<BudgetModel> users;
+  final int selectedIndex;
 
-  BudgetPageLoaded({required this.users});
+  BudgetPageLoaded({
+    required this.users,
+    required this.selectedIndex,
+  });
 }

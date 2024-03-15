@@ -1,11 +1,13 @@
+import 'package:budget_binder/presentation/screens/transaction_page/cubit/transaction_page_cubit.dart';
 import 'package:flutter/material.dart';
 import '../../../../data/models/expense_model.dart';
-import '../transaction_page.dart';
 
 class EditExpenseDialog extends StatefulWidget {
   final ExpenseModel expense;
+  final TransactionPageCubit cubit;
 
-  const EditExpenseDialog({super.key, required this.expense});
+  const EditExpenseDialog(
+      {super.key, required this.expense, required this.cubit});
 
   @override
   State<EditExpenseDialog> createState() => _EditExpenseDialogState();
@@ -38,7 +40,8 @@ class _EditExpenseDialogState extends State<EditExpenseDialog> {
 
   void _save() async {
     setState(() => _loading = true);
-    await TransactionPageProvider.cubit.updateExpense(
+
+    await widget.cubit.updateExpense(
       widget.expense.id,
       _amountController.text,
       _descriptionController.text,

@@ -1,5 +1,6 @@
 import 'package:budget_binder/presentation/screens/budget_page/cubit/budget_page_cubit.dart';
 import 'package:budget_binder/presentation/screens/budget_page/widgets/budget_tile.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +26,7 @@ class BudgetPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                cubit.createUser();
+                cubit.createBudget();
                 Navigator.of(context).pop();
               },
               child: Text('Submit'),
@@ -38,7 +39,7 @@ class BudgetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final welcomePageCubit = BlocProvider.of<BudgetPageCubit>(context);
+    final budgetPageCubit = BlocProvider.of<BudgetPageCubit>(context);
     return Scaffold(
       body: BlocBuilder<BudgetPageCubit, BudgetPageState>(
         builder: (context, state) {
@@ -47,20 +48,28 @@ class BudgetPage extends StatelessWidget {
               child: Column(
                 children: [
                   Expanded(
-                    child: state is BudgetPageInitial
-                        ? Text("No users yet")
-                        : SingleChildScrollView(
-                            child: Column(
-                              children: (state as BudgetPageLoaded)
-                                  .users
-                                  .map((e) => BudgetTile(user: e))
-                                  .toList(),
+                    child: state is BudgetPageLoaded
+                        ? CarouselSlider(
+                            carouselController:
+                                budgetPageCubit.buttonCarouselController,
+                            options: CarouselOptions(
+                              enlargeCenterPage: true,
+                              initialPage: state.selectedIndex,
+                              scrollDirection: Axis.vertical,
+                              viewportFraction: 0.5,
+                              onPageChanged: budgetPageCubit.onPageChanged,
                             ),
-                          ),
+                            items: state.users
+                                .map((e) => Builder(
+                                      builder: (context) => BudgetTile(user: e),
+                                    ))
+                                .toList(),
+                          )
+                        : Text("No users yet"),
                   ),
                   ElevatedButton(
                       onPressed: () =>
-                          _showUsernameInputDialog(context, welcomePageCubit),
+                          _showUsernameInputDialog(context, budgetPageCubit),
                       child: Text('add user')),
                 ],
               ),

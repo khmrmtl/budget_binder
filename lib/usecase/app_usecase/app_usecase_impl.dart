@@ -20,6 +20,10 @@ class AppUsecaseImpl implements AppUsecase {
   final ExpenseDBOperations _expenseTable = ExpenseDBOperations();
 
   late BudgetModel activeBudget;
+  bool _hasAnActiveBudget = false;
+
+  @override
+  bool get hasAnActiveBudget => _hasAnActiveBudget;
 
   @override
   BudgetModel getCurrentBudget() {
@@ -28,6 +32,7 @@ class AppUsecaseImpl implements AppUsecase {
 
   @override
   void setCurrentBudget(BudgetModel currentUser) {
+    if (!_hasAnActiveBudget) _hasAnActiveBudget = true;
     activeBudget = currentUser;
   }
 

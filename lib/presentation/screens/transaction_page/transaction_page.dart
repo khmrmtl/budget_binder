@@ -5,18 +5,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'widgets/expense_tile.dart';
 
-class TransactionPageProvider extends StatelessWidget {
-  const TransactionPageProvider({super.key});
-  static final cubit = TransactionPageCubit();
+// class TransactionPageProvider extends StatelessWidget {
+//   const TransactionPageProvider({super.key});
+//   static final cubit = TransactionPageCubit();
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => cubit..init(),
-      child: const TransactionPage(),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider(
+//       create: (context) => cubit..init(),
+//       child: const TransactionPage(),
+//     );
+//   }
+// }
 
 class TransactionPage extends StatelessWidget {
   const TransactionPage({super.key});
